@@ -17,15 +17,14 @@
 // ])
 //   .then(configs => console.log(JSON.stringify(configs, null, 2)))
 //   .catch(error => console.error(error));
-const fs = require('fs');
+const {readFile} = require('fs');
+const {promisify} = require('util');
 
 const args = process.argv.slice(2);
 const fileName = args[0];
 
-const inputStream = fs.createReadStream(fileName, 'utf8');
+const readFilePromise = promisify(readFile);
 
-inputStream.on('data', chunk => {
-  console.log('new chunk receieved');
-
-  console.log(chunk);
-});
+readFilePromise(fileName, {encoding: 'utf8'})
+  .then(data => console.log(data))
+  .catch(error => console.error(error));
