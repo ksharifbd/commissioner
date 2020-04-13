@@ -19,6 +19,7 @@
 //   .catch(error => console.error(error));
 const {readFile} = require('fs');
 const {promisify} = require('util');
+const {markTransactionByIds} = require('./input-processor');
 
 const args = process.argv.slice(2);
 const fileName = args[0];
@@ -26,5 +27,10 @@ const fileName = args[0];
 const readFilePromise = promisify(readFile);
 
 readFilePromise(fileName, {encoding: 'utf8'})
-  .then(data => console.log(data))
+  .then(data => {
+    const parsedData = JSON.parse(data);
+    const markedDataByIds = markTransactionByIds(parsedData);
+
+    console.log(markedDataByIds);
+  })
   .catch(error => console.error(error));
