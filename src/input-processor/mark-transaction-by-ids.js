@@ -2,12 +2,14 @@ const moment = require('moment');
 
 function markTransactionByIds(data) {
   return data.map((datum, index) => {
-    const week = moment(datum.date, 'YYYY-MM-DD').isoWeek();
-    const weekYear = moment(datum.date, 'YYYY-MM-DD').isoWeekYear();
+    const {date, user_id: userId, user_type: userType, type: operationType} = datum;
 
-    const weekId = `${datum.user_id}_${weekYear}_${week}`;
+    const week = moment(date, 'YYYY-MM-DD').isoWeek();
+    const weekYear = moment(date, 'YYYY-MM-DD').isoWeekYear();
 
-    const transactionId = `${datum.type}_${datum.user_type}_${index + 1}`;
+    const weekId = `${userId}_${weekYear}_${week}`;
+
+    const transactionId = `${operationType}_${userType}_${index + 1}`;
 
     return {
       ...datum,
