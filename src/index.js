@@ -19,7 +19,7 @@
 //   .catch(error => console.error(error));
 const {readFile} = require('fs');
 const {promisify} = require('util');
-const {markTransactionByIds} = require('./input-processor');
+const {markTransactionByIds} = require('./input-processors');
 
 const args = process.argv.slice(2);
 const fileName = args[0];
