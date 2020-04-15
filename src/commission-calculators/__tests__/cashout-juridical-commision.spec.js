@@ -1,13 +1,7 @@
 const cashOutJuridicalCommission = require('../cashout-juridical-commission.js');
+const {configs} = require('../../mock-data');
 
 describe('Cash Out Juridical Commission', () => {
-  const config = {
-    percents: 0.3,
-    min: {
-      amount: 0.5,
-    },
-  };
-
   const testData = [
     {
       input: 300,
@@ -27,14 +21,22 @@ describe('Cash Out Juridical Commission', () => {
   ];
 
   testData.forEach(datum => {
-    it(`should return ${datum.output.correct} for the input ${datum.input} when the commission fee is ${config.percents}`, () => {
-      expect(cashOutJuridicalCommission(config, datum.input)).toBe(datum.output.correct);
-      expect(cashOutJuridicalCommission(config, datum.input)).not.toBe(datum.output.incorrect);
+    it(`should return ${datum.output.correct} for the input ${datum.input} when the commission fee is ${configs.cashOutJuridical.percents}`, () => {
+      expect(cashOutJuridicalCommission(configs.cashOutJuridical, datum.input)).toBe(
+        datum.output.correct
+      );
+      expect(cashOutJuridicalCommission(configs.cashOutJuridical, datum.input)).not.toBe(
+        datum.output.incorrect
+      );
     });
 
-    it(`should return the minimum commission fee ${config.min.amount} if the commission fee is below the miniimum amount threshold`, () => {
-      expect(cashOutJuridicalCommission(config, datum.input)).toBe(datum.output.correct);
-      expect(cashOutJuridicalCommission(config, datum.input)).not.toBe(datum.output.incorrect);
+    it(`should return the minimum commission fee ${configs.cashOutJuridical.min.amount} if the commission fee is below the miniimum amount threshold`, () => {
+      expect(cashOutJuridicalCommission(configs.cashOutJuridical, datum.input)).toBe(
+        datum.output.correct
+      );
+      expect(cashOutJuridicalCommission(configs.cashOutJuridical, datum.input)).not.toBe(
+        datum.output.incorrect
+      );
     });
   });
 });

@@ -1,6 +1,4 @@
-const input = require('../../mock-data/input');
-
-const output = {
+const groupedTransactionsByWeek = {
   '1_2020_4': [],
   '1_2016_1': [
     {transaction_id: 'cash_out_natural_4', amount: 30000},
@@ -16,7 +14,4 @@ const output = {
   ],
 };
 
-module.exports = {
-  input,
-  output,
-};
+module.exports = groupedTransactionsByWeek;
