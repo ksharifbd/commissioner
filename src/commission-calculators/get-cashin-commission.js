@@ -1,4 +1,4 @@
-function cashInCommission(config, amount) {
+function getCashInCommission(config, amount) {
   const {
     percents,
     max: {amount: maxLimit},
@@ -13,4 +13,4 @@ function cashInCommission(config, amount) {
   return commission;
 }
 
-module.exports = cashInCommission;
+module.exports = getCashInCommission;

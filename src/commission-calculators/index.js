@@ -1,7 +1,7 @@
-const cashInCommission = require('./cashin-commission');
-const cashOutJuridicalCommission = require('./cashout-juridical-commission.js');
+const getCashInCommission = require('./get-cashin-commission');
+const getCashOutJuridicalCommission = require('./get-cashout-juridical-commission.js');
 
 module.exports = {
-  cashInCommission,
-  cashOutJuridicalCommission,
+  getCashInCommission,
+  getCashOutJuridicalCommission,
 };

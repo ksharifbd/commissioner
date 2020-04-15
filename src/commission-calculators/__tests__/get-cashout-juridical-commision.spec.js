@@ -1,4 +1,4 @@
-const cashOutJuridicalCommission = require('../cashout-juridical-commission.js');
+const getCashOutJuridicalCommission = require('../get-cashout-juridical-commission.js');
 const {configs} = require('../../mock-data');
 
 describe('Cash Out Juridical Commission', () => {
@@ -22,19 +22,19 @@ describe('Cash Out Juridical Commission', () => {
 
   testData.forEach(datum => {
     it(`should return ${datum.output.correct} for the input ${datum.input} when the commission fee is ${configs.cashOutJuridical.percents}`, () => {
-      expect(cashOutJuridicalCommission(configs.cashOutJuridical, datum.input)).toBe(
+      expect(getCashOutJuridicalCommission(configs.cashOutJuridical, datum.input)).toBe(
         datum.output.correct
       );
-      expect(cashOutJuridicalCommission(configs.cashOutJuridical, datum.input)).not.toBe(
+      expect(getCashOutJuridicalCommission(configs.cashOutJuridical, datum.input)).not.toBe(
         datum.output.incorrect
       );
     });
 
     it(`should return the minimum commission fee ${configs.cashOutJuridical.min.amount} if the commission fee is below the miniimum amount threshold`, () => {
-      expect(cashOutJuridicalCommission(configs.cashOutJuridical, datum.input)).toBe(
+      expect(getCashOutJuridicalCommission(configs.cashOutJuridical, datum.input)).toBe(
         datum.output.correct
       );
-      expect(cashOutJuridicalCommission(configs.cashOutJuridical, datum.input)).not.toBe(
+      expect(getCashOutJuridicalCommission(configs.cashOutJuridical, datum.input)).not.toBe(
         datum.output.incorrect
       );
     });

@@ -1,4 +1,4 @@
-function cashOutJuridicalCommission(config, amount) {
+function getCashOutJuridicalCommission(config, amount) {
   const {
     percents,
     min: {amount: minAmount},
@@ -13,4 +13,4 @@ function cashOutJuridicalCommission(config, amount) {
   return commission;
 }
 
-module.exports = cashOutJuridicalCommission;
+module.exports = getCashOutJuridicalCommission;
