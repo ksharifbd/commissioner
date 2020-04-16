@@ -1,5 +1,5 @@
-function groupTransactionByWeekids(data, type = 'cash_out_natural') {
-  return data.reduce((acc, curr) => {
+function groupTransactionsByWeekids(transactions, type = 'cash_out_natural') {
+  return transactions.reduce((acc, curr) => {
     if (!Object.prototype.hasOwnProperty.call(acc, curr.week_id)) {
       acc[curr.week_id] = [];
     }
@@ -14,4 +14,4 @@ function groupTransactionByWeekids(data, type = 'cash_out_natural') {
   }, {});
 }
 
-module.exports = groupTransactionByWeekids;
+module.exports = groupTransactionsByWeekids;

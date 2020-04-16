@@ -1,4 +1,8 @@
-function getCashInCommission(config, amount) {
+function getCashInCommission(transaction, config) {
+  const {
+    operation: {amount},
+  } = transaction;
+
   const {
     percents,
     max: {amount: maxLimit},

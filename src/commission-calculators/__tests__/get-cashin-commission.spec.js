@@ -1,10 +1,13 @@
 const getCashInCommission = require('../get-cashin-commission');
-const {configs} = require('../../mock-data');
+const {configs, markedTransactionsByIds} = require('../../mock-data');
+const {operationTypes} = require('../../constants');
 
 describe('Get Cash In Commission', () => {
   const testData = [
     {
-      input: 200,
+      input: markedTransactionsByIds.find(trx =>
+        trx.transaction_id.includes(operationTypes.CASH_IN)
+      ),
       output: {
         correct: 0.06,
         incorrect: 5,
@@ -12,7 +15,12 @@ describe('Get Cash In Commission', () => {
     },
 
     {
-      input: 1000000,
+      input: {
+        ...markedTransactionsByIds.find(trx => trx.transaction_id.includes(operationTypes.CASH_IN)),
+        operation: {
+          amount: 1000000,
+        },
+      },
       output: {
         correct: 5,
         incorrect: 300,
@@ -22,13 +30,13 @@ describe('Get Cash In Commission', () => {
 
   testData.forEach(datum => {
     it(`should return ${datum.output.correct} for the input ${datum.input} when the commission fee is ${configs.cashIn.percents}`, () => {
-      expect(getCashInCommission(configs.cashIn, datum.input)).toBe(datum.output.correct);
-      expect(getCashInCommission(configs.cashIn, datum.input)).not.toBe(datum.output.incorrect);
+      expect(getCashInCommission(datum.input, configs.cashIn)).toBe(datum.output.correct);
+      expect(getCashInCommission(datum.input, configs.cashIn)).not.toBe(datum.output.incorrect);
     });
 
     it(`should not return the commission fee more than ${configs.cashIn.max.amount} if the commission fee exceeds the maximum amount threshold`, () => {
-      expect(getCashInCommission(configs.cashIn, datum.input)).toBe(datum.output.correct);
-      expect(getCashInCommission(configs.cashIn, datum.input)).not.toBe(datum.output.incorrect);
+      expect(getCashInCommission(datum.input, configs.cashIn)).toBe(datum.output.correct);
+      expect(getCashInCommission(datum.input, configs.cashIn)).not.toBe(datum.output.incorrect);
     });
   });
 });

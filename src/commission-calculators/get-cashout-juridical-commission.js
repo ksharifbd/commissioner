@@ -1,4 +1,8 @@
-function getCashOutJuridicalCommission(config, amount) {
+function getCashOutJuridicalCommission(transaction, config) {
+  const {
+    operation: {amount},
+  } = transaction;
+
   const {
     percents,
     min: {amount: minAmount},

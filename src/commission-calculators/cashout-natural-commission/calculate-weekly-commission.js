@@ -1,4 +1,4 @@
-function calculateWeeklyCommission(config, transactionsByWeek) {
+function calculateWeeklyCommission(transactionsByWeek, config) {
   const {
     percents,
     week_limit: {amount: weeklyThreshold},

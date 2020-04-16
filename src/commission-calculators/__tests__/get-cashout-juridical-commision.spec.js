@@ -1,10 +1,13 @@
 const getCashOutJuridicalCommission = require('../get-cashout-juridical-commission.js');
-const {configs} = require('../../mock-data');
+const {configs, markedTransactionsByIds} = require('../../mock-data');
+const {operationTypes} = require('../../constants');
 
 describe('Cash Out Juridical Commission', () => {
   const testData = [
     {
-      input: 300,
+      input: markedTransactionsByIds.find(trx =>
+        trx.transaction_id.includes(operationTypes.CASH_OUT_JURIDICAL)
+      ),
       output: {
         correct: 0.9,
         incorrect: 0.5,
@@ -12,7 +15,14 @@ describe('Cash Out Juridical Commission', () => {
     },
 
     {
-      input: 150,
+      input: {
+        ...markedTransactionsByIds.find(trx =>
+          trx.transaction_id.includes(operationTypes.CASH_OUT_JURIDICAL)
+        ),
+        operation: {
+          amount: 150,
+        },
+      },
       output: {
         correct: 0.5,
         incorrect: 0.45,
@@ -22,19 +32,19 @@ describe('Cash Out Juridical Commission', () => {
 
   testData.forEach(datum => {
     it(`should return ${datum.output.correct} for the input ${datum.input} when the commission fee is ${configs.cashOutJuridical.percents}`, () => {
-      expect(getCashOutJuridicalCommission(configs.cashOutJuridical, datum.input)).toBe(
+      expect(getCashOutJuridicalCommission(datum.input, configs.cashOutJuridical)).toBe(
         datum.output.correct
       );
-      expect(getCashOutJuridicalCommission(configs.cashOutJuridical, datum.input)).not.toBe(
+      expect(getCashOutJuridicalCommission(datum.input, configs.cashOutJuridical)).not.toBe(
         datum.output.incorrect
       );
     });
 
     it(`should return the minimum commission fee ${configs.cashOutJuridical.min.amount} if the commission fee is below the miniimum amount threshold`, () => {
-      expect(getCashOutJuridicalCommission(configs.cashOutJuridical, datum.input)).toBe(
+      expect(getCashOutJuridicalCommission(datum.input, configs.cashOutJuridical)).toBe(
         datum.output.correct
       );
-      expect(getCashOutJuridicalCommission(configs.cashOutJuridical, datum.input)).not.toBe(
+      expect(getCashOutJuridicalCommission(datum.input, configs.cashOutJuridical)).not.toBe(
         datum.output.incorrect
       );
     });

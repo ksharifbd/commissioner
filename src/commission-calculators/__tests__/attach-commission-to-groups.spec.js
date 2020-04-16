@@ -6,7 +6,7 @@ const {
 } = require('../../mock-data');
 
 describe('Attach Commission To Groups', () => {
-  const commissionedGroups = attachCommissionToGroups(configs.cashOutNatural, input);
+  const commissionedGroups = attachCommissionToGroups(input, configs.cashOutNatural);
   const weeksFromGroupedTransaction = Object.keys(input);
   const weeksFromCommissionedGroups = Object.keys(commissionedGroups);
   const properties = ['weeklyGross', 'commissionableAmount', 'commission', 'applyNextCommissionOn'];
