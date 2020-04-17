@@ -1,3 +1,5 @@
+const {applyMaxCap} = require('../commission-modifiers');
+
 function getCashInCommission(transaction, config) {
   const {
     operation: {amount},
@@ -5,16 +7,12 @@ function getCashInCommission(transaction, config) {
 
   const {
     percents,
-    max: {amount: maxLimit},
+    max: {amount: maxThreshold},
   } = config;
 
   const commission = amount * (percents / 100);
 
-  if (commission > maxLimit) {
-    return maxLimit;
-  }
-
-  return commission;
+  return applyMaxCap(commission, maxThreshold);
 }
 
 module.exports = getCashInCommission;

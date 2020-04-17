@@ -1,3 +1,5 @@
+const {applyMinCap} = require('../commission-modifiers');
+
 function getCashOutJuridicalCommission(transaction, config) {
   const {
     operation: {amount},
@@ -5,16 +7,12 @@ function getCashOutJuridicalCommission(transaction, config) {
 
   const {
     percents,
-    min: {amount: minAmount},
+    min: {amount: minThreshold},
   } = config;
 
   const commission = amount * (percents / 100);
 
-  if (commission < minAmount) {
-    return minAmount;
-  }
-
-  return commission;
+  return applyMinCap(commission, minThreshold);
 }
 
 module.exports = getCashOutJuridicalCommission;
