@@ -1,17 +1,18 @@
 const CommissionBroker = require('..');
 const {markedTransactionsByIds, configs} = require('../../mock-data');
+const {operationTypes} = require('../../constants');
 
 const fetchedConfigs = [
   {
-    operationType: 'cash_in',
+    operationType: operationTypes.CASH_IN,
     config: configs.cashIn,
   },
   {
-    operationType: 'cash_out_juridical',
+    operationType: operationTypes.CASH_OUT_JURIDICAL,
     config: configs.cashOutJuridical,
   },
   {
-    operationType: 'cash_out_natural',
+    operationType: operationTypes.CASH_OUT_NATURAL,
     config: configs.cashOutNatural,
   },
 ];
