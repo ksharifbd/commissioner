@@ -18,7 +18,7 @@ class CommissionBroker {
 
   setAndGetConfigForOperationType(type) {
     if (!this[type]) {
-      this[type] = this.configs.find(config => config.operationType === type);
+      this[type] = this.configs.find(config => config.operationType === type).config;
     }
 
     return this[type];
