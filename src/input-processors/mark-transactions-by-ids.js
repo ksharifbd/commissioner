@@ -1,6 +1,6 @@
 const moment = require('moment');
 
-function markTransactionByIds(data) {
+function markTransactionsByIds(data) {
   return data.map((datum, index) => {
     const {date, user_id: userId, user_type: userType, type: operationType} = datum;
 
@@ -19,4 +19,4 @@ function markTransactionByIds(data) {
   });
 }
 
-module.exports = markTransactionByIds;
+module.exports = markTransactionsByIds;

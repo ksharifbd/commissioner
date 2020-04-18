@@ -1,4 +1,4 @@
-const markTransactionByIds = require('../mark-transaction-by-ids');
+const markTransactionsByIds = require('../mark-transactions-by-ids');
 
 describe('Mark Transaction By Ids', () => {
   const data = [
@@ -33,7 +33,7 @@ describe('Mark Transaction By Ids', () => {
   ];
 
   data.forEach(datum => {
-    const markedTransactions = markTransactionByIds(datum.input);
+    const markedTransactions = markTransactionsByIds(datum.input);
 
     it('should mark the transaction with correct transaction id', () => {
       expect(markedTransactions[0].transaction_id).toBe(datum.output[0].transaction_id);

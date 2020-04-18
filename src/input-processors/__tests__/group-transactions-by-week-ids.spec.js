@@ -1,10 +1,10 @@
-const markTransactionByIds = require('../mark-transaction-by-ids');
+const markTransactionsByIds = require('../mark-transactions-by-ids');
 const groupTransactionsByWeekIds = require('../group-transactions-by-week-ids');
 const {input, groupedTransactionsByWeek: output} = require('../../mock-data');
 const {operationTypes} = require('../../constants');
 
 describe('Group Transactions By Week Ids', () => {
-  const markedTransactionsByIds = markTransactionByIds(input);
+  const markedTransactionsByIds = markTransactionsByIds(input);
   const groupedTransactionsByWeekIds = groupTransactionsByWeekIds(
     markedTransactionsByIds,
     operationTypes.CASH_OUT_NATURAL

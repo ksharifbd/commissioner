@@ -1,7 +1,7 @@
-const markTransactionByIds = require('./mark-transaction-by-ids');
+const markTransactionsByIds = require('./mark-transactions-by-ids');
 const groupTransactionsByWeekIds = require('./group-transactions-by-week-ids');
 
 module.exports = {
-  markTransactionByIds,
+  markTransactionsByIds,
   groupTransactionsByWeekIds,
 };
