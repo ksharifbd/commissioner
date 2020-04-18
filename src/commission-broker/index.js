@@ -24,6 +24,22 @@ class CommissionBroker {
     return this[type];
   }
 
+  setAndGetgroupedTransactions(transactions) {
+    if (!this.groupedTransactions) {
+      this.groupedTransactions = groupTransactionsByWeekIds(transactions);
+    }
+
+    return this.groupedTransactions;
+  }
+
+  setAndGetCommissionedGroups(transactions, config) {
+    if (!this.commissionedGroups) {
+      this.commissionedGroups = attachCommissionToGroups(transactions, config);
+    }
+
+    return this.commissionedGroups;
+  }
+
   // eslint-disable-next-line
   getCommission(transaction) {
     const {transaction_id: trxId} = transaction;
@@ -41,17 +57,11 @@ class CommissionBroker {
     }
 
     if (trxId.includes(operationTypes.CASH_OUT_NATURAL)) {
-      if (!this.groupedTransactions) {
-        this.groupedTransactions = groupTransactionsByWeekIds(this.transactions);
-      }
+      const groupedTransactions = this.setAndGetgroupedTransactions(this.transactions);
+      const config = this.setAndGetConfigForOperationType(operationTypes.CASH_OUT_NATURAL);
+      const commissionedGroups = this.setAndGetCommissionedGroups(groupedTransactions, config);
 
-      if (!this.commissionedGroups) {
-        const config = this.setAndGetConfigForOperationType(operationTypes.CASH_OUT_NATURAL);
-
-        this.commissionedGroups = attachCommissionToGroups(this.groupedTransactions, config);
-      }
-
-      return getCashOutNaturalCommission(transaction, this.commissionedGroups);
+      return getCashOutNaturalCommission(transaction, commissionedGroups);
     }
   }
 }
