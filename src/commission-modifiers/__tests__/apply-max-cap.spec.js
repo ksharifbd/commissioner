@@ -4,18 +4,18 @@ describe('Apply Max Cap', () => {
   const data = [
     {
       input: {
-        commission: 100,
+        commission: 10000,
         threshold: 10,
       },
-      output: 10,
+      output: 1000,
     },
 
     {
       input: {
-        commission: 8,
+        commission: 800,
         threshold: 10,
       },
-      output: 8,
+      output: 800,
     },
   ];
 

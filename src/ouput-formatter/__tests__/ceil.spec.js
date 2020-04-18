@@ -1,31 +1,31 @@
-const centCeil = require('..');
+const ceil = require('..');
 
-describe('Cent Ceil', () => {
+describe('Ceil', () => {
   const data = [
     {
-      input: 87,
+      input: 8700,
       output: '87.00',
     },
 
     {
-      input: 0.06,
+      input: 6,
       output: '0.06',
     },
 
     {
-      input: 0.3,
+      input: 30,
       output: '0.30',
     },
 
     {
-      input: 0.023,
+      input: 2.3,
       output: '0.03',
     },
   ];
 
   data.forEach(datum => {
     it(`should return ${datum.output} for the input ${datum.input}`, () => {
-      expect(centCeil(datum.input)).toBe(datum.output);
+      expect(ceil(datum.input)).toBe(datum.output);
     });
   });
 });

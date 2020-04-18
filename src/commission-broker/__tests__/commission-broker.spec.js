@@ -24,15 +24,15 @@ const cashOutNaturalTransaction = markedTransactionsByIds[3];
 const data = [
   {
     input: cashInTransaction,
-    output: 0.06,
+    output: 6,
   },
   {
     input: cashOutJuridicalTransaction,
-    output: 0.9,
+    output: 90,
   },
   {
     input: cashOutNaturalTransaction,
-    output: 87,
+    output: 8700,
   },
 ];
 
@@ -41,7 +41,7 @@ describe('Commission Broker', () => {
 
   data.forEach(datum => {
     it('should return correct commission fee for the transaction', () => {
-      expect(commissionBroker.getCommission(datum.input)).toBe(datum.output);
+      expect(Math.ceil(commissionBroker.getCommission(datum.input))).toBe(datum.output);
     });
   });
 });

@@ -4,18 +4,18 @@ describe('Apply Min Cap', () => {
   const data = [
     {
       input: {
-        commission: 100,
+        commission: 10000,
         threshold: 10,
       },
-      output: 100,
+      output: 10000,
     },
 
     {
       input: {
-        commission: 8,
+        commission: 800,
         threshold: 10,
       },
-      output: 10,
+      output: 1000,
     },
   ];
 

@@ -4,6 +4,7 @@ const {
   groupedTransactionsByWeek: input,
   commissionAttachedGroups: output,
 } = require('../../mock-data');
+const {convertToCents} = require('../../utils');
 
 describe('Attach Commission To Groups', () => {
   const commissionedGroups = attachCommissionToGroups(input, configs.cashOutNatural);
@@ -12,6 +13,8 @@ describe('Attach Commission To Groups', () => {
   const properties = ['weeklyGross', 'commissionableAmount', 'commission', 'applyNextCommissionOn'];
   const sampleGroupedTransactions = input[weeksFromGroupedTransaction[3]];
   const sampleCommissionedTransactions = commissionedGroups[weeksFromCommissionedGroups[2]];
+
+  const weeklyThreshold = convertToCents(configs.cashOutNatural.week_limit.amount);
 
   it('should properly attach commissions to groups', () => {
     expect(commissionedGroups).toEqual(output);
@@ -27,17 +30,17 @@ describe('Attach Commission To Groups', () => {
     });
   });
 
-  it(`should not apply weekly waived amount ${configs.cashOutNatural.week_limit.amount} for the transaction if it does not exceed the limit`, () => {
+  it(`should not apply weekly waived amount ${weeklyThreshold} for the transaction if it does not exceed the limit`, () => {
     expect(sampleCommissionedTransactions[0].commissionableAmount).toBe(0);
   });
 
-  it(`should apply weekly waived amount ${configs.cashOutNatural.week_limit.amount} if the transaction amount is equal or greater than that`, () => {
+  it(`should apply weekly waived amount ${weeklyThreshold} if the transaction amount is equal or greater than that`, () => {
     expect(sampleCommissionedTransactions[3].commissionableAmount).toBe(
-      sampleCommissionedTransactions[3].weeklyGross - configs.cashOutNatural.week_limit.amount
+      sampleCommissionedTransactions[3].weeklyGross - weeklyThreshold
     );
   });
 
-  it(`should not apply weekly waived amount ${configs.cashOutNatural.week_limit.amount} for the transaction if it is already applied in a given week`, () => {
+  it(`should not apply weekly waived amount ${weeklyThreshold} for the transaction if it is already applied in a given week`, () => {
     expect(sampleCommissionedTransactions[4].commissionableAmount).toBe(
       sampleGroupedTransactions[4].amount
     );

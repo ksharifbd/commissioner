@@ -1,4 +1,5 @@
 const moment = require('moment');
+const {convertToCents} = require('../utils');
 
 /**
  * Assigns a transaction id and a week id to each transaction
@@ -9,7 +10,13 @@ const moment = require('moment');
  */
 function markTransactionsByIds(transactions) {
   return transactions.map((trx, index) => {
-    const {date, user_id: userId, user_type: userType, type: operationType} = trx;
+    const {
+      date,
+      user_id: userId,
+      user_type: userType,
+      type: operationType,
+      operation: {amount},
+    } = trx;
 
     const week = moment(date, 'YYYY-MM-DD').isoWeek();
     const weekYear = moment(date, 'YYYY-MM-DD').isoWeekYear();
@@ -18,8 +25,14 @@ function markTransactionsByIds(transactions) {
 
     const transactionId = `${operationType}_${userType}_${index + 1}`;
 
+    const convertedAmount = convertToCents(amount);
+
     return {
       ...trx,
+      operation: {
+        ...trx.operation,
+        amount: convertedAmount,
+      },
       week_id: weekId,
       transaction_id: transactionId,
     };

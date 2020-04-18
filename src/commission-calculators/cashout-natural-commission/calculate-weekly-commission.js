@@ -1,3 +1,5 @@
+const {convertToCents} = require('../../utils');
+
 /**
  * calculates commissions for the transactions in a specific week
  *
@@ -9,8 +11,10 @@
 function calculateWeeklyCommission(transactionsByWeek, config) {
   const {
     percents,
-    week_limit: {amount: weeklyThreshold},
+    week_limit: {amount},
   } = config;
+
+  const weeklyThreshold = convertToCents(amount);
 
   return transactionsByWeek.reduce((acc, transaction, index) => {
     let weeklyGross = transaction.amount;

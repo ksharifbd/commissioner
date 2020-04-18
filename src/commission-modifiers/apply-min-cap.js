@@ -1,3 +1,5 @@
+const {convertToCents} = require('../utils');
+
 /**
  * applies minimum threshold to the commission
  *
@@ -7,7 +9,11 @@
  * @returns {number}
  */
 function applyMinCap(commission, threshold) {
-  return commission < threshold ? threshold : commission;
+  const convertedThreshold = convertToCents(threshold);
+
+  const result = commission < convertedThreshold ? convertedThreshold : commission;
+
+  return Math.ceil(result);
 }
 
 module.exports = applyMinCap;

@@ -9,8 +9,8 @@ describe('Cash Out Juridical Commission', () => {
         trx.transaction_id.includes(operationTypes.CASH_OUT_JURIDICAL)
       ),
       output: {
-        correct: 0.9,
-        incorrect: 0.5,
+        correct: 90,
+        incorrect: 50,
       },
     },
 
@@ -20,12 +20,12 @@ describe('Cash Out Juridical Commission', () => {
           trx.transaction_id.includes(operationTypes.CASH_OUT_JURIDICAL)
         ),
         operation: {
-          amount: 150,
+          amount: 15000,
         },
       },
       output: {
-        correct: 0.5,
-        incorrect: 0.45,
+        correct: 50,
+        incorrect: 45,
       },
     },
   ];

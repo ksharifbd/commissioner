@@ -1,6 +1,6 @@
 const markTransactionsByIds = require('../mark-transactions-by-ids');
 
-describe('Mark Transaction By Ids', () => {
+describe.only('Mark Transaction By Ids', () => {
   const data = [
     {
       input: [
@@ -22,7 +22,7 @@ describe('Mark Transaction By Ids', () => {
           user_type: 'natural',
           type: 'cash_in',
           operation: {
-            amount: 100.0,
+            amount: 10000.0,
             currency: 'EUR',
           },
           week_id: '1_2020_4',
@@ -43,11 +43,14 @@ describe('Mark Transaction By Ids', () => {
       expect(markedTransactions[0].week_id).toBe(datum.output[0].week_id);
     });
 
+    it('should convert the input amount to cents', () => {
+      expect(markedTransactions[0].operation.amount).toBe(datum.output[0].operation.amount);
+    });
+
     it('should not modify other properties from the input object', () => {
       expect(markedTransactions[0].date).toBe(datum.input[0].date);
       expect(markedTransactions[0].user_id).toBe(datum.input[0].user_id);
       expect(markedTransactions[0].user_type).toBe(datum.input[0].user_type);
-      expect(markedTransactions[0].operation.amount).toBe(datum.input[0].operation.amount);
       expect(markedTransactions[0].operation.currency).toBe(datum.input[0].operation.currency);
     });
   });
