@@ -1,36 +1,43 @@
-// const configFetcher = require('./config-fetcher');
-
-// const configUrls = {
-//   cashIn: {
-//     natural: 'http://private-38e18c-uzduotis.apiary-mock.com/config/cash-in',
-//   },
-//   cashOut: {
-//     natural: 'http://private-38e18c-uzduotis.apiary-mock.com/config/cash-out/natural',
-//     juridical: 'http://private-38e18c-uzduotis.apiary-mock.com/config/cash-out/juridical',
-//   },
-// };
-
-// Promise.all([
-//   configFetcher(configUrls.cashIn.natural, 'cashIn-natural'),
-//   configFetcher(configUrls.cashOut.natural, 'cashOut-natural'),
-//   configFetcher(configUrls.cashOut.juridical, 'cashOut-juridical'),
-// ])
-//   .then(configs => console.log(JSON.stringify(configs, null, 2)))
-//   .catch(error => console.error(error));
 const {readFile} = require('fs');
 const {promisify} = require('util');
-const {markTransactionByIds} = require('./input-processors');
+const dotenv = require('dotenv');
+const {markTransactionsByIds} = require('./input-processors');
+const configFetcher = require('./config-fetcher');
+const {operationTypes} = require('./constants');
+const CommissionBroker = require('./commission-broker');
+
+dotenv.config();
+
+const configUrls = {
+  cashIn: process.env.CASH_IN_CONFIG_URL,
+  cashOut: {
+    natural: process.env.CASH_OUT_NATURAL_CONFIG_URL,
+    juridical: process.env.CASH_OUT_JURIDICAL_CONFIG_URL,
+  },
+};
+
+const readFilePromise = promisify(readFile);
 
 const args = process.argv.slice(2);
 const fileName = args[0];
 
-const readFilePromise = promisify(readFile);
+Promise.all([
+  readFilePromise(fileName, {encoding: 'utf8'}),
+  configFetcher(configUrls.cashIn, operationTypes.CASH_IN),
+  configFetcher(configUrls.cashOut.natural, operationTypes.CASH_OUT_NATURAL),
+  configFetcher(configUrls.cashOut.juridical, operationTypes.CASH_OUT_JURIDICAL),
+])
+  .then(([transactions, ...configs]) => {
+    const parsedTransactions = JSON.parse(transactions);
 
-readFilePromise(fileName, {encoding: 'utf8'})
-  .then(data => {
-    const parsedData = JSON.parse(data);
-    const markedDataByIds = markTransactionByIds(parsedData);
+    const markedTransactionsByIds = markTransactionsByIds(parsedTransactions);
 
-    console.log(markedDataByIds);
+    const commissionBroker = new CommissionBroker(markedTransactionsByIds, configs);
+
+    markedTransactionsByIds.forEach(trx => {
+      const commission = commissionBroker.getCommission(trx);
+
+      console.log('commission', commission);
+    });
   })
   .catch(error => console.error(error));
