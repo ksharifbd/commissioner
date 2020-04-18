@@ -7,9 +7,9 @@
     "node": ">=10.0.0"
   },
   "scripts": {
-    "start": "nodemon ./src/index.js",
-    "test": "jest",
-    "test:watch": "jest --watch",
+    "start": "./node_modules/.bin/nodemon ./src/index.js",
+    "test": "./node_modules/.bin/jest",
+    "test:watch": "./node_modules/.bin/jest --watch",
     "lint": "./node_modules/.bin/eslint ./src",
     "lint:autofix": "./node_modules/.bin/eslint --fix ./src"
   },

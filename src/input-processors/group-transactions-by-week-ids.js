@@ -1,4 +1,15 @@
-function groupTransactionsByWeekids(transactions, type = 'cash_out_natural') {
+const {operationTypes} = require('../constants');
+
+/**
+ * groups transactions by week ids
+ *
+ * @function groupTransactionsByWeekids
+ * @param {Array.<Object>} transactions - transactions marked by transaction ids
+ * and week ids
+ * @param {string} [type] - transaction operation type
+ * @returns {Object}
+ */
+function groupTransactionsByWeekids(transactions, type = operationTypes.CASH_OUT_NATURAL) {
   return transactions.reduce((acc, curr) => {
     if (!Object.prototype.hasOwnProperty.call(acc, curr.week_id)) {
       acc[curr.week_id] = [];

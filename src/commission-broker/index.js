@@ -8,6 +8,15 @@ const {
 const {groupTransactionsByWeekIds} = require('../input-processors');
 
 class CommissionBroker {
+  /**
+   * Dispatches transactions to the calculators depending on type
+   * and return calculated commissions.
+   * it also caches the results of grouping to reuse in later transactions.
+   *
+   * @param {Array.<Object>} transactions - transactions marked by transaction ids
+   * and week ids
+   * @param {Array.<Object>} configs - configuration for each transaction types
+   */
   constructor(transactions, configs) {
     this.transactions = transactions;
     this.configs = configs;
@@ -16,6 +25,7 @@ class CommissionBroker {
     this.commissionedGroups = null;
   }
 
+  // private method
   setAndGetConfigForOperationType(type) {
     if (!this[type]) {
       this[type] = this.configs.find(config => config.operationType === type).config;
@@ -24,6 +34,7 @@ class CommissionBroker {
     return this[type];
   }
 
+  // private method
   setAndGetgroupedTransactions(transactions) {
     if (!this.groupedTransactions) {
       this.groupedTransactions = groupTransactionsByWeekIds(transactions);
@@ -32,6 +43,7 @@ class CommissionBroker {
     return this.groupedTransactions;
   }
 
+  // private method
   setAndGetCommissionedGroups(transactions, config) {
     if (!this.commissionedGroups) {
       this.commissionedGroups = attachCommissionToGroups(transactions, config);
@@ -40,6 +52,14 @@ class CommissionBroker {
     return this.commissionedGroups;
   }
 
+  /**
+   * Dispatches transactions to the calculators depending on type
+   * and return calculated commissions.
+   *
+   * @method getCommission
+   * @param {Object} transaction - an individual transaction
+   * @returns {number} - calculated commission
+   */
   // eslint-disable-next-line
   getCommission(transaction) {
     const {transaction_id: trxId} = transaction;

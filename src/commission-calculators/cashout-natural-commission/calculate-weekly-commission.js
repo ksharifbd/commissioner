@@ -1,3 +1,11 @@
+/**
+ * calculates commissions for the transactions in a specific week
+ *
+ * @function calculateWeeklyCommission
+ * @param {Array} transactionsByWeek - transactions of a week
+ * @param {Object} config - config for the transaction type
+ * @returns {Array} - calculated commissions for transactions of a week
+ */
 function calculateWeeklyCommission(transactionsByWeek, config) {
   const {
     percents,
