@@ -5,6 +5,7 @@ const {markTransactionsByIds} = require('./input-processors');
 const configFetcher = require('./config-fetcher');
 const {operationTypes} = require('./constants');
 const CommissionBroker = require('./commission-broker');
+const centCeil = require('./ouput-modifier');
 
 dotenv.config();
 
@@ -37,7 +38,9 @@ Promise.all([
     markedTransactionsByIds.forEach(trx => {
       const commission = commissionBroker.getCommission(trx);
 
-      console.log('commission', commission);
+      // eslint-disable-next-line no-console
+      console.log(centCeil(commission));
     });
   })
+  // eslint-disable-next-line no-console
   .catch(error => console.error(error));
