@@ -2,7 +2,8 @@ const moment = require('moment');
 const {convertToCents} = require('../utils');
 
 /**
- * Assigns a transaction id and a week id to each transaction
+ * Assigns a transaction id and a week id to each transaction.
+ * It also converts amount to cents.
  *
  * @function markTransactionsByIds
  * @param {Array.<Object>} transactions - parsed JSON inputs read from the file
