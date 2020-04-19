@@ -8,7 +8,7 @@ Clone this repository and install dependecies.
 npm i
 ```
 
-Set the value of the environment variables in the `.env` file. The value is the URLs of the
+Set the value of the environment variables in the `.env` file. The values are the URLs of the
 respective configurations.
 
 ```
