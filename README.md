@@ -8,6 +8,15 @@ Clone this repository and install dependecies.
 npm i
 ```
 
+Set the value of the environment variables in the `.env` file. The value is the URLs of the
+respective configurations.
+
+```
+CASH_IN_CONFIG_URL=http://example.com/config/cash-in
+CASH_OUT_JURIDICAL_CONFIG_URL=http://example.com/config/cash-out/juridical
+CASH_OUT_NATURAL_CONFIG_URL=http://example.com/config/cash-out/natural
+```
+
 This program takes a file as an input which contain transactions in JSON format. To run the
 program -
 
