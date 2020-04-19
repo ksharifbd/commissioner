@@ -1,5 +1,7 @@
 ## How to Run
 
+It's better that the Node version is >= 10.
+
 Clone this repository and install dependecies.
 
 ```
